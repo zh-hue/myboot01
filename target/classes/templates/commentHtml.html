@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>评论</title>
+    <script th:src="@{/webjars/jquery/3.4.1/jquery.js}"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap-3.3.7-dist/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-3.3.7-dist/css/bootstrap-theme.css}">
+    <link rel="stylesheet" th:href="@{/css/top.css}"/>
+    <link rel="stylesheet" th:href="@{/css/imgCss.css}"/>
+    <link rel="stylesheet" th:href="@{/css/order.css}"/>
+    <link rel="stylesheet" th:href="@{/css/comment.css}"/>
+    <script th:src="@{/css/bootstrap-3.3.7-dist/js/bootstrap.js}"></script>
+</head>
+<body>
+    <div th:replace="include/modelhtml :: tophtml"></div>
+    <div style="width: 70%;height: 100px;margin-left: 15%">
+    <div style="width: 30%;height: 100%;float: left">
+        <img class="toMidDiv" src="/static/img/simpleLogo.png" style="position: relative"/>
+    </div>
+</div>
+
+    <div style="width: 70%;margin-left: 15%">
+        <div style="width: 100%; float: left">
+            <div class="reviewProductInfoImg"><img width="400px" height="400px" th:src="@{/img(id=${commentMsg.getGoodsid()})}"></div>
+            <div class="reviewProductInfoRightDiv">
+                <div class="reviewProductInfoRightText" th:text="${commentMsg.getName()}"></div>
+                <table class="reviewProductInfoTable">
+                    <tbody><tr>
+                        <td width="75px">价格:</td>
+                        <td><span class="reviewProductInfoTablePrice" th:text="'￥'+${commentMsg.getPrice()}"></span></td>
+                    </tr>
+                    <tr>
+                        <td>配送</td>
+                        <td>快递:  0.00</td>
+                    </tr>
+                    </tbody></table>
+                <div class="reviewProductInfoRightBelowDiv">
+                    <span><img src="/static/img/reviewLight.png"/></span>
+                    <span th:text="'现在查看的是 您所购买商品的信息于'+${commentMsg.getDateString()}+'下单购买了此商品'"></span>
+                </div>
+            </div>
+        </div>
+        <div style="clear:both"></div>
+        <div class="reviewStasticsDiv">
+            <div class="reviewStasticsLeft">
+                <div class="reviewStasticsLeftTop"></div>
+                <div class="reviewStasticsLeftContent">累计评价 <span class="reviewStasticsNumber" th:text="'('+${commentNum}+')'"></span></div>
+                <div class="reviewStasticsLeftFoot"></div>
+            </div>
+            <div class="reviewStasticsRight">
+                <div class="reviewStasticsRightEmpty"></div>
+                <div class="reviewStasticsFoot"></div>
+            </div>
+        </div>
+        <div class="makeReviewDiv">
+            <form method="post" action="/addComment">
+                <div class="makeReviewText">其他买家，需要你的建议哦！</div>
+                <table class="makeReviewTable">
+                    <tbody><tr>
+                        <td class="makeReviewTableFirstTD">评价商品</td>
+                        <td><textarea name="evaluate"></textarea></td>
+                    </tr>
+                    </tbody></table>
+                <div class="makeReviewButtonDiv">
+                    <input name="id" th:value="${commentMsg.getGoodsid()}" style="display: none"/>
+                    <button type="submit">提交评价</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div th:replace="include/modelhtml :: buttom" ></div>
+</body>
+</html>

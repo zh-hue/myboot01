@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>添加商品</title>
+    <script th:src="@{/webjars/jquery/3.4.1/jquery.js}"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap-3.3.7-dist/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-3.3.7-dist/css/bootstrap-theme.css}">
+    <link rel="stylesheet" th:href="@{/css/top.css}"/>
+    <link rel="stylesheet" th:href="@{/css/imgCss.css}"/>
+    <script th:src="@{/css/bootstrap-3.3.7-dist/js/bootstrap.js}"></script>
+</head>
+<body>
+    <form action="/addGoods" method="post" enctype="multipart/form-data">
+        <input name="name" type="text"/>
+       库存: <input name="stock" type="text"/>
+        <select name="type">
+            <option value="平板电脑">平板电脑</option>
+        </select>
+       价格: <input name="price" type="text"/>
+        <input name="imgurl" type="file"/>
+        <input name="information" type="text"/>
+        <input type="submit" value="提交"/>
+    </form>
+</body>
+</html>

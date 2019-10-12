@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script th:src="@{/webjars/jquery/3.4.1/jquery.js}"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap-3.3.7-dist/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-3.3.7-dist/css/bootstrap-theme.css}">
+    <link rel="stylesheet" th:href="@{/css/top.css}"/>
+    <link rel="stylesheet" th:href="@{/css/fenlei.css}"/>
+    <script th:src="@{/css/bootstrap-3.3.7-dist/js/bootstrap.js}"></script>
+</head>
+<body>
+    <div th:replace="include/modelhtml :: tophtml"></div>
+    <div th:replace="include/modelhtml :: topsouhtml"></div>
+    <div style="background-color: red;height: 30px;clear: both;">
+        <div style="position:relative;left: 200px;background-color: orange;height: 100%;width: 200px;float: left;padding: 5px;">
+            <span class="glyphicon glyphicon-list" aria-hidden="true" style="width: auto;height: auto;position: relative;top: 2px;"></span>
+            品牌分类
+        </div>
+        <div style="position:relative;left: 200px;background-color: red;height: 100%;width: 150px;float: left;padding: 5px;text-align: center">沙发</div>
+        <div style="position:relative;left: 150px;background-color: red;height: 100%;width: 150px;float: left;padding: 5px;text-align: center">电热水器</div>
+        <div style="position:relative;left: 150px;background-color: red;height: 100%;width: 150px;float: left;padding: 5px;text-align: center">空调</div>
+        <div style="position:relative;left: 150px;background-color: red;height: 100%;width: 150px;float: left;padding: 5px;text-align: center">男士西服</div>
+        <div style="position:relative;left: 150px;background-color: red;height: 100%;width: 150px;float: left;padding: 5px;text-align: center">品牌女装</div>
+    </div>
+
+    <!--商品分类-->
+    <div style="border: 2px red solid;position:relative;width: 70%;height: auto;left: 200px;">
+        <div id="fenLei" style="width: 200px;height: 400px;position: relative;border: 2px red solid;float: left">
+            <div th:each="list : ${typeList}" id="map" class="fenLeiDiv">
+                <form action="/goods" method="post" style="display: none">
+                    <input name="type" th:value="${list.getName()}"/>
+                </form>
+                <a class="goodsDiv"><span class="glyphicon glyphicon-fire" style="margin: 0px;"></span>[[${list.getName()}]]</a>
+            </div>
+        </div>
+        <div class="active imgDiv01" style="order: 10;width: calc(100% - 200px);height: 400px;position: relative;float: left;padding: 10px;background-image:url('/static/img/1.jpg');background-size:100% 100%;">
+            <ul style="width: 200px;height: auto;position: absolute;left: 50%;transform: translate(-50%);bottom: 5px">
+                <input class="imgInput" type="radio" name="li" onclick="changeImg(1)" checked/>
+                <input class="imgInput" type="radio" name="li" onclick="changeImg(2)"/>
+                <input class="imgInput" type="radio" name="li" onclick="changeImg(3)"/>
+                <input class="imgInput" type="radio" name="li" onclick="changeImg(4)"/>
+                <input class="imgInput" type="radio" name="li" onclick="changeImg(5)"/>
+            </ul>
+        </div>
+    </div>
+    <!--分类商品列表-->
+    <div style="clear: both;border: 2px red solid;position:relative;width: 70%;height: auto;left: 200px;">
+        <div th:each="zsLists : ${zhanshi}" style="width: 100%;height: 320px;border: 1px red solid">
+            <!--分类名称-->
+            <div style="width: 100%;height: 20px;background-color: white">
+                <form action="/goods" method="post" style="display: none">
+                    <input name="type" th:value="${zsLists.get(0).getType()}"/>
+                </form>
+                <a  class="goodsDiv" style="text-decoration:none;cursor: pointer" th:text="${zsLists.get(0).getType()}"></a>
+            </div>
+            <!--分类下的每一个商品-->
+            <div style="clear: both;width: 100%;height: 300px;background-color: #66afe9;padding-left: 10%;">
+                <!--商品-->
+               <div th:each="zsList : ${zsLists}" style="cursor:pointer;float:left;width: 20%;height: 280px;margin: 10px;background-color: white;">
+                   <form action="/gooddetailHtml" method="post" style="display: none">
+                       <input name="id" th:value="${zsList.getId()}"/>
+                   </form>
+                   <!--图片-->
+                   <div class="goodsDiv" style="width: 100%;height: 80%;border-bottom: 1px #9d9d9d solid">
+                       <img th:src="@{/img(id=${zsList.getId()})}" style="width: 100%;height: 100%;"/>
+                   </div>
+                   <!--简介-->
+                   <div class="goodsDiv" style="width: 100%;height: 10%;border-bottom: 1px #9d9d9d solid;padding: 5px;text-align: center" th:text="${zsList.getInformation()}"></div>
+                   <!--价格-->
+                   <div class="goodsDiv" style="width: 100%;height: 10%;border-bottom: 1px #9d9d9d solid;padding: 5px;text-align: center" th:text="${zsList.getPrice()}+'元'"></div>
+               </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="include/modelhtml :: buttom" ></div>
+    <!--显示对应分类的商品-->
+    <div th:each="items : ${flGoods}" class="list" style="overflow-y: scroll;order: 20;background-color:#e7e7e7;width: 600px;height: 400px;border: 2px red solid;position: absolute;display: none" >
+        <div class="goodsListDivStyle" th:each="item : ${items}">
+            <form action="/gooddetailHtml" method="post" style="display: none">
+                <input name="id" th:value="${item.getId()}"/>
+            </form>
+            <a class="goodsDiv" style="text-decoration:none;cursor: pointer" th:text="${item.getName()}"></a>
+        </div>
+    </div>
+
+    <script>
+        $(".goodsDiv").on("click",function () {
+            $(this).prev("form:eq(0)").submit();
+        })
+    </script>
+    <script>
+        var i = 1;
+        function changeImg(num){
+            i = num;
+            $($(".imgDiv01")[0]).css("background-image","url('/static/img/"+num+".jpg')");
+        }
+        setInterval(function () {
+            if (i >5) {
+                i = 1
+            }
+            $($(".imgDiv01")[0]).css("background-image","url('/static/img/"+i+".jpg')");
+            $($(".imgInput")[i-1]).prop("checked",true);
+            i = i+1;
+        },4000);
+    </script>
+    <script>
+        $(".fenLeiDiv").each(function (index) {
+            $(this).mouseover(function () {
+                var left = $("#fenLei").offset().left+$("#fenLei").width();
+                var top = $("#fenLei").offset().top;
+                $($(".list")[index]).css({"left":left,"display":"block","top":top});
+            });
+            $(this).mouseleave(function () {
+                $($(".list")[index]).css("display","none");
+            });
+        });
+        $(".list").each(function (index) {
+            $(this).mouseover(function () {
+                var left = $("#fenLei").offset().left+$("#fenLei").width();
+                $($(".list")[index]).css({"left":left,"display":"block","top":top});
+            });
+            $(this).mouseleave(function () {
+                $($(".list")[index]).css("display","none");
+            });
+        });
+    </script>
+    <script src="/static/js/submitkeywordBtnJs.js"></script>
+</body>
+</html>

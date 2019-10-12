@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"></property>
+        </commentGenerator>
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/tianmao?serverTimezone=GMT"
+                        userId="root"
+                        password="woaixuexi">
+        </jdbcConnection>
+
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="com.cdut.zhong.tm.bean" targetProject=".\src\main\java">
+            <property name="enableSubPackages" value="false" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="mybatis.mapper"  targetProject=".\src\main\resources">
+            <property name="enableSubPackages" value="false" />
+        </sqlMapGenerator>
+
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.cdut.zhong.tm.dao"  targetProject=".\src\main\java">
+            <property name="enableSubPackages" value="false" />
+        </javaClientGenerator>
+
+        <!--<table tableName="goods" schema="" domainObjectName="Goods"></table>-->
+        <!--<table tableName="goodsevaluate" schema="" domainObjectName="Goodsevaluate"></table>-->
+        <!--<table tableName="goodsimginfor" schema="" domainObjectName="Goodsimginfor"></table>-->
+        <!--<table tableName="goodtype" schema="" domainObjectName="Goodtype"></table>-->
+        <!--<table tableName="userorders" schema="" domainObjectName="Userorders"></table>-->
+        <!--<table tableName="userheadportrait" schema="" domainObjectName="Userheadportrait"></table>-->
+        <!--<table tableName="userinformation" schema="" domainObjectName="Userinformation"></table>-->
+        <!--<table tableName="shoppingcar" schema="" domainObjectName="Shoppingcar"></table>-->
+        <table tableName="keywordsearch" schema="" domainObjectName="Keywordsearch"></table>
+    </context>
+</generatorConfiguration>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>商品页面</title>
+    <script th:src="@{/webjars/jquery/3.4.1/jquery.js}"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap-3.3.7-dist/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-3.3.7-dist/css/bootstrap-theme.css}">
+    <link rel="stylesheet" th:href="@{/css/top.css}"/>
+    <script th:src="@{/css/bootstrap-3.3.7-dist/js/bootstrap.js}"></script>
+</head>
+<body>
+    <div th:replace="include/modelhtml :: tophtml"></div>
+    <div th:replace="include/modelhtml :: topsouhtml"></div>
+    <div th:replace="include/modelhtml :: shangdian(var=${type}+'.jpg')"></div>
+    <div th:replace="include/modelhtml :: paixu(type=${type})">排序</div>
+    <div id="goodsListDiv" style="float:left;width: 70%;height: auto;background-color: white;padding-left: 10%;border: 1px black solid;margin-left:15%">
+        <!--商品-->
+        <div th:each="list : ${lists}" style="cursor:pointer;float:left;width: 20%;height: 280px;margin: 10px;background-color: white;border: 1px red solid">
+            <form action="/gooddetailHtml" method="post" style="display: none">
+                <input name="type" th:value="${list.get(1).getType()}"/>
+                <input name="id" th:value="${list.get(1).getId()}"/>
+            </form>
+            <!--图片-->
+            <div class="goodsDiv" style="width: 100%;height: 80%;border-bottom: 1px #9d9d9d solid">
+                <img th:src="@{/img(id=${list.get(1).getId()})}" style="width: 100%;height: 100%;"/>
+            </div>
+            <!--价格-->
+            <div  class="goodsDiv" style="width: 100%;height: 10%;border-bottom: 1px #9d9d9d solid;padding: 5px;text-align: center" th:text="'￥'+${list.get(1).getPrice()}"></div>
+            <!--简介-->
+            <div  class="goodsDiv" style="width: 100%;height: 10%">
+                <div style="width: 50%;height: 100%;border-right: black;float: left" th:text="'成交量:'+${list.get(1).getDealnum()}"></div>
+                <div style="width: 50%;height: 100%;float: left" th:text="'评论数:'+${list.get(0)}"></div>
+            </div>
+        </div>
+    </div>
+    <div style="clear: both"></div>
+    <div th:replace="include/modelhtml :: buttom" ></div>
+
+    <script>
+        $(".goodsDiv").on("click",function () {
+            $(this).prevAll("form:eq(0)").submit();
+        })
+    </script>
+    <script>
+        var changePriceFlag = false;
+        var changedealnumFlag = false;
+        function changePrice(goodstype) {
+            $("#changeDiv2").css("backgroundColor","white");
+            $("#changeDiv1").css("backgroundColor","red");
+            var orderBy;
+            if (changePriceFlag){
+                $("#priceSpan").removeClass("glyphicon-arrow-down");
+                $("#priceSpan").addClass("glyphicon-arrow-up");
+                orderBy = "price asc";
+                changePriceFlag = !changePriceFlag;
+            }else {
+                $("#priceSpan").removeClass("glyphicon-arrow-up");
+                $("#priceSpan").addClass("glyphicon-arrow-down");
+                orderBy = "price desc";
+                changePriceFlag = !changePriceFlag;
+            }
+           $.ajax({
+               url : "/goodsAjax",
+               type :  "GET",
+               data : "orderby="+orderBy+"&type="+goodstype,
+               success : function (result) {
+                   $("#goodsListDiv").empty();
+                   $.each(result,function (index,item) {
+                       var form = $(" <form action=\"/gooddetailHtml\" method=\"post\" style=\"display: none\"></form>");
+                       var input1 = $("<input name=\"type\"/>").val(item[1].type);
+                       var input2 = $("<input name=\"id\"/>").val(item[1].price);
+                       $(form).append(input1).append(input2);
+                       <!--商品-->
+                       var eachDiv = $("<div style=\"cursor:pointer;float:left;width: 20%;height: 280px;margin: 10px;background-color: white;border: 1px red solid\"></div>");
+                       var imgDiv = $("<div  class=\"goodsDiv\" style=\"width: 100%;height: 80%;border-bottom: 1px #9d9d9d solid\"></div>");
+                       var img = $("<img style=\"width: 100%;height: 100%;\"/>").attr("src","/img?id="+item[1].id);
+                       $(imgDiv).append(img);
+                       var priceDiv = $("<div  class=\"goodsDiv\" style=\"width: 100%;height: 10%;border-bottom: 1px #9d9d9d solid;padding: 5px;text-align: center\"></div>")
+                           .text("￥"+item[1].price);
+                       var jianDiv = $("<div  class=\"goodsDiv\" style=\"width: 100%;height: 10%\"></div>");
+                       var jian1 = $("<div style=\"width: 50%;height: 100%;border-right: black;float: left\"></div>").text("成交量:"+item[1].dealnum);
+                       var jian2 = $(" <div style=\"width: 50%;height: 100%;float: left\"></div>").text("评论数:"+item[0])
+                       $(jianDiv).append(jian1).append(jian2);
+                       $(eachDiv).append(form).append(imgDiv).append(priceDiv).append(jianDiv);
+                       $("#goodsListDiv").append(eachDiv);
+                   });
+               }
+           });
+        }
+        function changeDealnum(goodstype) {
+            $("#changeDiv1").css("backgroundColor","white");
+            $("#changeDiv2").css("backgroundColor","red");
+            var orderBy;
+            if (changedealnumFlag){
+                $("#dealSpan").removeClass("glyphicon-arrow-down");
+                $("#dealSpan").addClass("glyphicon-arrow-up");
+                orderBy = "dealnum asc";
+                changedealnumFlag = !changedealnumFlag;
+            }else {
+                $("#dealSpan").removeClass("glyphicon-arrow-up");
+                $("#dealSpan").addClass("glyphicon-arrow-down");
+                orderBy = "dealnum desc";
+                changedealnumFlag = !changedealnumFlag;
+            }
+           $.ajax({
+               url : "/goodsAjax",
+               type :  "GET",
+               data : "orderby="+orderBy+"&type="+goodstype,
+               success : function (result) {
+                   $("#goodsListDiv").empty();
+                   $.each(result,function (index,item) {
+                       var form = $(" <form action=\"/gooddetailHtml\" method=\"post\" style=\"display: none\"></form>");
+                       var input1 = $("<input name=\"type\"/>").val(item[1].type);
+                       var input2 = $("<input name=\"id\"/>").val(item[1].price);
+                       $(form).append(input1).append(input2);
+                       <!--商品-->
+                       var eachDiv = $("<div style=\"cursor:pointer;float:left;width: 20%;height: 280px;margin: 10px;background-color: white;border: 1px red solid\"></div>");
+                       var imgDiv = $("<div  class=\"goodsDiv\" style=\"width: 100%;height: 80%;border-bottom: 1px #9d9d9d solid\"></div>");
+                       var img = $("<img style=\"width: 100%;height: 100%;\"/>").attr("src","/img?id="+item[1].id);
+                       $(imgDiv).append(img);
+                       var priceDiv = $("<div  class=\"goodsDiv\" style=\"width: 100%;height: 10%;border-bottom: 1px #9d9d9d solid;padding: 5px;text-align: center\"></div>")
+                           .text("￥"+item[1].price);
+                       var jianDiv = $("<div  class=\"goodsDiv\" style=\"width: 100%;height: 10%\"></div>");
+                       var jian1 = $("<div style=\"width: 50%;height: 100%;border-right: black;float: left\"></div>")
+                           .text("成交量:"+item[1].dealnum);
+                       var jian2 = $(" <div style=\"width: 50%;height: 100%;float: left\"></div>").text("评论数:"+item[0])
+                       $(jianDiv).append(jian1).append(jian2);
+                       $(eachDiv).append(form).append(imgDiv).append(priceDiv).append(jianDiv);
+                       $("#goodsListDiv").append(eachDiv);
+                   });
+               }
+           });
+        }
+    </script>
+    <script src="/static/js/submitkeywordBtnJs.js"></script>
+</body>
+</html>

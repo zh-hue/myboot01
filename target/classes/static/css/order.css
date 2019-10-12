@@ -1,0 +1,258 @@
+table.productListTable {
+    width: 70%;
+    margin-left: 15%;
+    border-collapse: separate;
+}
+th.productListTableFirstColumn {
+    text-align: left !important;
+}
+img.tmallbuy {
+    width: 15px;
+}
+a.marketLink {
+    color: black;
+    font-size: 12px;
+    font-family: Arial;
+    font-weight: normal;
+}
+table.productListTable tr.rowborder td {
+    background-color: #b2d1ff;
+    border-right: 2px solid #fff;
+    height: 3px;
+}
+tbody.productListTableTbody td {
+    text-align: center;
+    font-size:12px;
+}
+tr.orderItemTR td {
+    padding: 20px 0px;
+}
+tbody.productListTableTbody td.orderItemFirstTD {
+    text-align: left;
+}
+tbody.productListTableTbody td.orderItemProductInfo {
+    text-align: left;
+}
+img.orderItemImg {
+    width: 50px;
+    height: 50px;
+    border: 1px solid #E9E9E9;
+}
+a.orderItemProductLink {
+    color: #666666;
+    display: block;
+}
+span.orderItemProductPrice, span.orderItemProductNumber {
+    color: #000000;
+}
+span.orderItemUnitSum {
+    color: #CC0000;
+    font-weight: bold;
+}
+label.orderItemDeliveryLabel {
+    color: #666666;
+    font-family: Arial;
+    font-size: 12px;
+    font-weight: normal;
+}
+select.orderItemDeliverySelect {
+    width: 100px;
+    height: 23px;
+}
+td.orderItemFirstTD, td.orderItemLastTD {
+    border-bottom: 3px solid #b2d1ff !important;
+}
+div.payedDiv {
+    border: 1px solid #D4D4D4;
+    max-width: 1013px;
+    margin: 10px auto 20px auto;
+}
+div.payedTextDiv {
+    height: 61px;
+    background-color: #ECFFDC;
+    padding: 17px 0px 0px 25px;
+}
+div.payedAddressInfo {
+    padding: 26px 35px;
+}
+span.payedInfoPrice {
+    color: #B10000;
+    font-weight: bold;
+    font-size: 14px;
+    font-family: arial;
+}
+div.paedCheckLinkDiv {
+    margin-left: 38px;
+}
+a.payedCheckLink {
+    color: #2D8CBA;
+}
+
+a.payedCheckLink:hover {
+    color: #2D8CBA;
+    text-decoration: underline;
+}
+div.payedSeperateLine {
+    border-top: 1px dotted #D4D4D4;
+    margin: 0px 31px;
+}
+div.warningDiv {
+    margin: 23px 45px;
+}
+.redColor {
+    color: #C40000;
+}
+
+.boldWord {
+    font-weight: bold;
+}
+div.cartDiv {
+    max-width: 1013px;
+    margin: 10px auto;
+    color: black;
+}
+
+span.cartTitlePrice {
+    color: #C40000;
+    font-size: 14px;
+    font-weight: bold;
+    margin-left: 5px;
+    margin-right: 3px;
+}
+
+div.cartTitle button {
+    background-color: #AAAAAA;
+    border: 1px solid #AAAAAA;
+    color: white;
+    width: 53px;
+    height: 25px;
+    border-radius: 2px;
+}
+
+table.cartProductTable {
+    width: 100%;
+    font-size:12px;
+}
+
+table.cartProductTable th {
+    font-weight: normal;
+    color: #3C3C3C;
+    padding: 20px 20px;
+}
+
+img.cartProductImg {
+    padding: 1px;
+    border: 1px solid #EEEEEE;
+    width: 80px;
+    height: 80px;
+}
+
+a.cartProductLink {
+    color: #3C3C3C;
+}
+
+a.cartProductLink:hover {
+    color: #C40000;
+    text-decoration: underline;
+}
+
+div.cartProductLinkOutDiv {
+    position: relative;
+    height: 80px;
+}
+
+div.cartProductLinkInnerDiv {
+    position: absolute;
+    bottom: 0;
+    height: 20px;
+}
+
+tr.cartProductItemTR td {
+    padding: 20px 20px;
+}
+
+tr.cartProductItemTR {
+    border: 1px solid #CCCCCC;
+}
+
+span.cartProductItemOringalPrice {
+    text-decoration: line-through;
+    color: #9C9C9C;
+    display: block;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+span.cartProductItemPromotionPrice {
+    font-family: Arial;
+    font-size: 14px;
+    font-weight: bold;
+    color: #C40000;
+}
+
+span.cartProductItemSmallSumPrice {
+    font-family: Arial;
+    font-size: 14px;
+    font-weight: bold;
+    color: #C40000;
+}
+
+span.cartProductItemSmallSumNum{
+    font-family: Arial;
+    font-size: 14px;
+    font-weight: bold;
+    color: #C40000;
+}
+ span.cartProductItemSmallSumku{
+     font-family: Arial;
+     font-size: 14px;
+     font-weight: bold;
+     color: #C40000;
+ }
+
+div.cartProductChangeNumberDiv input {
+    border: solid 1px #AAAAAA;
+    width: 42px;
+    display: inline-block;
+}
+
+div.cartProductChangeNumberDiv a {
+    text-decoration: none;
+}
+
+div.cartProductChangeNumberDiv a {
+    width: 14px;
+    display: inline-block;
+    text-align: center;
+    color: black;
+    text-decoration: none;
+}
+
+img.cartProductItemIfSelected, img.selectAllItem {
+    cursor: pointer;
+}
+
+div.cartFoot {
+    background-color: #ac2925;
+    margin: 20px 0px;
+    color: black;
+    padding-left: 20px;
+}
+
+span.cartSumNumber {
+    color: #C40000;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+span.cartSumPrice {
+    color: #C40000;
+    font-weight: bold;
+    font-size: 20px;
+}
+.reduceSpan:hover{
+    border: 1px black solid;
+}
+.addSpan:hover{
+    border: 1px black solid;
+}

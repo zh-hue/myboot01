@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script th:src="@{/webjars/jquery/3.4.1/jquery.js}"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap-3.3.7-dist/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-3.3.7-dist/css/bootstrap-theme.css}">
+    <link rel="stylesheet" th:href="@{/css/top.css}"/>
+    <script th:src="@{/css/bootstrap-3.3.7-dist/js/bootstrap.js}"></script>
+</head>
+<body>
+    <div th:replace="include/modelhtml :: tophtml"></div>
+    <div th:replace="include/modelhtml :: topsouhtml"></div>
+    <div id="goodsListDiv" style="float:left;width: 70%;height: auto;background-color: white;padding-left: 10%;border: 1px black solid;margin-left:15%">
+        <!--商品-->
+        <div th:each="list : ${lists}" style="cursor:pointer;float:left;width: 20%;height: 280px;margin: 10px;background-color: white;border: 1px red solid">
+            <form action="/gooddetailHtml" method="post" style="display: none">
+                <input name="type" th:value="${list.get(1).getType()}"/>
+                <input name="id" th:value="${list.get(1).getId()}"/>
+            </form>
+            <!--图片-->
+            <div class="goodsDiv" style="width: 100%;height: 80%;border-bottom: 1px #9d9d9d solid">
+                <img th:src="@{/img(id=${list.get(1).getId()})}" style="width: 100%;height: 100%;"/>
+            </div>
+            <!--价格-->
+            <div  class="goodsDiv" style="width: 100%;height: 10%;border-bottom: 1px #9d9d9d solid;padding: 5px;text-align: center" th:text="'￥'+${list.get(1).getPrice()}"></div>
+            <!--简介-->
+            <div  class="goodsDiv" style="width: 100%;height: 10%">
+                <div style="width: 50%;height: 100%;border-right: black;float: left" th:text="'成交量:'+${list.get(1).getDealnum()}"></div>
+                <div style="width: 50%;height: 100%;float: left" th:text="'评论数:'+${list.get(0)}"></div>
+            </div>
+        </div>
+    </div>
+    <div style="clear: both"></div>
+    <div th:replace="include/modelhtml :: buttom" ></div>
+    <script>
+        $(".goodsDiv").on("click",function () {
+            $(this).prevAll("form:eq(0)").submit();
+        })
+    </script>
+    <script src="/static/js/submitkeywordBtnJs.js"></script>
+</body>
+</html>

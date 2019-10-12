@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script th:src="@{/webjars/jquery/3.4.1/jquery.js}"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap-3.3.7-dist/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-3.3.7-dist/css/bootstrap-theme.css}">
+    <link rel="stylesheet" th:href="@{/css/top.css}"/>
+    <link rel="stylesheet" th:href="@{/css/imgCss.css}"/>
+    <link rel="stylesheet" th:href="@{/css/order.css}"/>
+    <link rel="stylesheet" th:href="@{/css/ordercss.css}"/>
+    <script th:src="@{/css/bootstrap-3.3.7-dist/js/bootstrap.js}"></script>
+</head>
+<body>
+    <div th:replace="include/modelhtml :: tophtml"></div>
+    <div style="width: 70%;height: 100px;margin-left: 15%">
+    <div style="width: 30%;height: 100%;float: left">
+        <img class="toMidDiv" src="/static/img/simpleLogo.png" style="position: relative"/>
+    </div>
+    <div style="width: 70%;height: 100%;float: left">
+        <img class="toMidDiv" src="/static/img/buyflow.png" style="position: relative"/>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+
+    <div class="boughtDiv">
+        <div class="orderType">
+            <div class="selectedOrderType"><a orderstatus="all" href="#nowhere">所有订单</a></div>
+            <div><a orderstatus="waitPay" href="#nowhere">待付款</a></div>
+            <div><a orderstatus="waitDelivery" href="#nowhere">待发货</a></div>
+            <div><a orderstatus="waitConfirm" href="#nowhere">待收货</a></div>
+            <div><a orderstatus="waitReview" href="#nowhere" class="noRightborder">评价</a></div>
+            <!--<div class="orderTypeLastOne"><a class="noRightborder">&nbsp;</a></div>-->
+        </div>
+        <div style="clear:both"></div>
+        <div class="orderListTitle">
+            <table class="orderListTitleTable">
+                <tbody>
+                    <tr>
+                        <td>宝贝</td>
+                        <td width="100px">单价</td>
+                        <td width="100px">数量</td>
+                        <td width="120px">实付款</td>
+                        <td width="100px">交易操作</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="orderListItem">
+            <table th:each="orderDetail : ${orderDetails}" class="orderListItemTable" th:orderstatus="${orderDetail.getStateClass()}">
+                <tbody>
+                    <tr class="orderListItemFirstTR">
+                        <td>
+                            <b th:text="${orderDetail.getDateString()}"></b>
+                            <span th:text="'订单号:'+${orderDetail.getOrdercode()}"></span>
+                        </td>
+                        <td width="100px"><img width="13px" src="/static/img/tmallbuy.png">天猫商场</td>
+                        <td width="100px"></td>
+                        <td width="120px"></td>
+                        <td width="100px" class="orderItemDeleteTD">
+                            <a class="deleteOrderLink" th:orderCode="${orderDetail.getOrdercode()}" style="cursor: pointer">
+                                <span class="orderListItemDelete glyphicon glyphicon-trash"></span>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr class="orderItemProductInfoPartTR">
+                        <td class="orderItemProductInfoPartTD">
+                            <img style="float: left" width="80" height="80" th:src="@{/img(id=${orderDetail.getGoodsid()})}">
+                            <div style="float: left" class="orderListItemProductLinkOutDiv">
+                                <div style="width: 100%;height: 50%;margin-left: 10px;float: left">
+                                    <form action="/gooddetailHtml" method="post" style="display: none">
+                                        <input name="id" th:value="${orderDetail.getGoodsid()}"/>
+                                    </form>
+                                    <a class="orderListItemConfirm" th:text="${orderDetail.getName()}"></a>
+                                </div>
+                                <div style="width: 100%;height: 50%;margin-left: 10px;float: left" class="orderLisstatictItemProductLinkInnerDiv">
+                                    <img src="/static/img/creditcard1.png" title="支持信用卡支付">
+                                    <img src="/static/img/7day.png" title="消费者保障服务,承诺7天退货">
+                                    <img src="/static/img/promise.png" title="消费者保障服务,承诺如实描述">
+                                </div>
+                            </div>
+                            <div style="clear: both;"></div>
+                        </td>
+                        <td class="orderItemProductInfoPartTD" width="100px">
+                            <div class="orderListItemProductPrice" th:text="'￥'+${orderDetail.getPrice()}"></div>
+                        </td>
+                        <td valign="top" rowspan="1" class="orderListItemNumberTD orderItemOrderInfoPartTD" width="100px">
+                            <span class="orderListItemNumber" th:text="${orderDetail.getGoodsnum()}"></span>
+                        </td>
+                        <td valign="top" rowspan="1" width="120px" class="orderListItemProductRealPriceTD orderItemOrderInfoPartTD">
+                            <div class="orderListItemProductRealPrice" th:text="'￥'+${orderDetail.getAllprice()}"></div>
+                            <div class="orderListItemPriceWithTransport">(含运费：￥0.00)</div>
+                        </td>
+                        <td valign="top" rowspan="1" class="orderListItemButtonTD orderItemOrderInfoPartTD" width="100px">
+                            <div th:if="${orderDetail.getOrderstate()=='待支付'}">
+                                <form th:action="${orderDetail.getHref()}" method="post" style="display: none">
+                                    <input th:each="ilist : ${orderDetail.getPatterns()}" th:name="${ilist.getKey()}" th:value="${ilist.getValue()}"/>
+                                </form>
+                                <button class="orderListItemConfirm btn btn-info btn-sm" th:text="${orderDetail.getOrderstate()}"></button>
+                            </div>
+                            <button th:if="${orderDetail.getOrderstate()=='待收货'}" th:name="${orderDetail.getOrdercode()}" class="btn btn-info btn-sm ask2delivery receiving">确认收货</button>
+                            <button th:if="${orderDetail.getOrderstate()=='待发货'}" th:name="${orderDetail.getOrdercode()}" class="btn btn-info btn-sm ask2delivery deliver">催卖家发货</button>
+                            <div th:if="${orderDetail.getOrderstate()=='评价'}">
+                                <form th:action="${orderDetail.getHref()}" method="post" style="display: none">
+                                    <input th:name="name" th:value="${orderDetail.getName()}"/>
+                                    <input th:name="price" th:value="${orderDetail.getPrice()}"/>
+                                    <input th:name="dateString" th:value="${orderDetail.getPlacedate()}"/>
+                                    <input th:name="goodsid" th:value="${orderDetail.getGoodsid()}"/>
+                                </form>
+                                <button class="orderListItemConfirm btn btn-info btn-sm" th:text="${orderDetail.getOrderstate()}"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div style="clear: both"></div>
+    <div th:replace="include/modelhtml :: buttom" ></div>
+    <script>
+        $(".deleteOrderLink").on("click",function () {
+            var code = $(this).attr("orderCode");
+            $.ajax({
+                url : "/deleteOrderAjax",
+                type : "POST",
+                data : "orderCode="+code,
+                success : function (result) {
+                    alert(result+",刷新页面查看!");
+                }
+            })
+        });
+    </script>
+    <script>
+        $(".orderType div").on("click",function () {
+            $(".orderType div").removeClass("selectedOrderType");
+            $(this).addClass("selectedOrderType");
+            var status = $(this).children("a").attr("orderstatus");
+            if (status == "all") {
+                $(".orderListItemTable").css("display","table");
+            }else {
+                $(".orderListItemTable").css("display","none");
+                $(".orderListItemTable[orderstatus="+status+"]").css("display","table");
+            }
+        })
+    </script>
+    <script>
+        $(".orderListItemConfirm").on("click",function () {
+           $(this).prev("form").submit();
+        });
+
+        $(".deliver").on("click",function () {
+            var code = $(this).prop("name");
+            $.ajax({
+                url : "/updateOrder",
+                data : "code="+code+"&state=待收货",
+                type : "POST",
+                success : function () {
+                    alert("商家已发货，刷新确认!");
+                }
+            })
+        });
+         $(".receiving").on("click",function () {
+             var code = $(this).prop("name");
+             $.ajax({
+                 url : "/updateOrder",
+                 data : "code="+code+"&state=评价",
+                 type : "POST",
+                 success : function () {
+                     alert("已收货,商家将收到货款,可以进行评价!");
+                 }
+             })
+         })
+    </script>
+</body>
+</html>

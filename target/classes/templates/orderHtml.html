@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>确认订单</title>
+    <script th:src="@{/webjars/jquery/3.4.1/jquery.js}"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap-3.3.7-dist/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-3.3.7-dist/css/bootstrap-theme.css}">
+    <link rel="stylesheet" th:href="@{/css/top.css}"/>
+    <link rel="stylesheet" th:href="@{/css/imgCss.css}"/>
+    <link rel="stylesheet" th:href="@{/css/order.css}"/>
+    <script th:src="@{/css/bootstrap-3.3.7-dist/js/bootstrap.js}"></script>
+</head>
+<body>
+    <div th:replace="include/modelhtml :: tophtml"></div>
+    <div style="width: 70%;height: 100px;margin-left: 15%">
+        <div style="width: 30%;height: 100%;float: left">
+            <img class="toMidDiv" src="/static/img/simpleLogo.png" style="position: relative"/>
+        </div>
+        <div style="width: 70%;height: 100%;float: left">
+            <img class="toMidDiv" src="/static/img/buyflow.png" style="position: relative"/>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+    <div style="width: 70%;height: auto;margin-left: 15%"><h2>填写收货信息:</h2></div>
+    <div style="width: 70%;height: auto;margin-left: 15%">
+        <table style="border-collapse:separate; border-spacing:10px 10px;">
+            <tbody>
+                <tr>
+                    <td>详细地址<span style="color: red">*</span></td>
+                    <td>
+                        <textarea id="receiveaddress" style="width: 500px" placeholder="建议您如实填写详细收货地址，例如接到名称，门牌好吗，楼层和房间号等信息" required></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>邮政编码	<span style="color: red">*</span></td>
+                    <td>
+                        <input id="zipcode"  style="width: 300px" placeholder="如果您不清楚邮递区号，请填写000000"></input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>收货人姓名<span style="color: red">*</span></td>
+                    <td>
+                        <input id="receiveusermsg" style="width: 300px"placeholder="填写收货人信息"></input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>手机号码<span style="color: red">*</span></td>
+                    <td>
+                        <input id="userphone" style="width: 300px" placeholder="填写手机号码"></input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>备注</td>
+                    <td>
+                        <input id="userremarks" style="width: 300px" placeholder="填写给商家的备注"></input>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div style="width: 70%;height: auto;margin-left: 15%"><h2>确认订单信息:</h2></div>
+    <table class="productListTable">
+        <thead>
+        <tr>
+            <th colspan="2" class="productListTableFirstColumn">
+                <img class="tmallbuy" src="/static/img/tmallbuy.png">
+                <a class="marketLink">店铺：天猫店铺</a>
+            </th>
+            <th style="text-align: center">单价</th>
+            <th style="text-align: center">数量</th>
+            <th style="text-align: center">总计</th>
+            <th style="text-align: center">配送方式</th>
+        </tr>
+        <tr class="rowborder">
+            <td colspan="2"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        </thead>
+        <tbody class="productListTableTbody">
+        <tr class="orderItemTR" th:each="goodsList: ${goodsLists}">
+            <td style="display: none">
+                <input th:value="${goodsList.getId()}" style="display: none" />
+                <input th:value="${goodsList.getStock()}" style="display: none"/>
+                <input th:value="${goodsList.getStock()}*${goodsList.getPrice()}" style="display: none"/>
+            </td>
+            <td colspan="2" class="orderItemProductInfo">
+                <img th:src="@{/img(id=${goodsList.getId()})}" height="30px" style="float: left;margin-right: 20px"/>
+                <form action="/gooddetailHtml" method="post" style="display: none">
+                    <input name="id" th:value="${goodsList.getId()}"/>
+                </form>
+                <a class="orderItemProductLink" th:text="${goodsList.getName()}" style="float: left;cursor: pointer;"></a><br/>
+                <img src="/static/img/creditcard1.png" title="支持信用卡支付" style="clear: both">
+                <img src="/static/img/7day.png" title="消费者保障服务,承诺7天退货">
+                <img src="/static/img/promise.png" title="消费者保障服务,承诺如实描述">
+            </td>
+            <td>
+                <span class="orderItemProductPrice" th:text="'￥'+${goodsList.getPrice()}"></span>
+            </td>
+            <td>
+                <span class="orderItemProductNumber" th:text="${goodsList.getStock()}"></span>
+            </td>
+            <td><span class="orderItemUnitSum" th:text="'￥'+${goodsList.getStock()}*${goodsList.getPrice()}"></span></td>
+            <td>
+                <label class="orderItemDeliveryLabel">
+                    <input type="radio" value="" checked="checked">
+                    普通配送
+                </label>
+                <select class="orderItemDeliverySelect">
+                    <option>快递 免邮费</option>
+                </select>
+            </td>
+        </tr>
+        <tr class="rowborder">
+            <td colspan="2"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+    <div style="margin: 40px;height: 20px;">
+        <div class="pull-right" style="margin-right: 20%;">
+            <span>实付款：</span>
+            <span id="allPrice" th:allPrice="${allPrice}" style="color: #C40000 !important;font-size: 22px;font-weight: bold;border-bottom: 1px dotted #F2F6FF;" th:text="'￥'+${allPrice}"></span>
+        </div>
+    </div>
+    <div style="width: 100px;height: 30px;float: right;background-color: #c9302c;margin-right: 20%;margin-top: 10px;cursor: pointer">
+        <button id="submitBtn" style="background-color: #c9302c;position: relative;height: auto;width: auto;text-align: center;border:none;outline:none" class="toMidDiv">提交订单</button>
+    </div>
+    <div style="clear: both"></div>
+    <input id="isShoppingCarid" th:if="${isShoppingCar!=null}" style="display: none"/>
+    <div th:replace="include/modelhtml :: buttom" ></div>
+
+    <script>
+        $(".orderItemProductLink").on("click",function () {
+            $(this).prev("form").submit();
+        });
+        $("#submitBtn").on("click",function () {
+            var form = $("<form action='/goToListPlayHtml' method='post' style='display: none'></form>");
+            var trs = $(".orderItemTR");
+            var receiveaddress = $("#receiveaddress").val();
+            var zipcode = $("#zipcode").val();
+            var receiveusermsg = $("#receiveusermsg").val();
+            var userphone = $("#userphone").val();
+            var userremarks = $("#userremarks").val();
+            if (receiveaddress == null || receiveaddress.trim() == ""){
+                alert("地址不能为空!");
+            } else if (zipcode == null || zipcode.trim() == ""){
+                alert("邮编不能为空!");
+            } else if (receiveusermsg == null || receiveusermsg.trim() == ""){
+                alert("收货信息不能为空!");
+            } else if (userphone == null || userphone.trim() == ""){
+                alert("请留下联系方式!")
+            } else {
+                $.each(trs,function (index,item) {/*td:eq(0) input:eq(0*/
+                    var goodsId = $(item).children("td:eq(0)").children("input:eq(0)").val();
+                    var goodsNum = $(item).children("td:eq(0)").children("input:eq(1)").val();
+
+                    var input1 = $("<input name='list["+index+"].goodsid'/>").val(goodsId);
+                    var input2 = $("<input name='list["+index+"].goodsnum'/>").val(goodsNum);
+                    $(form).append(input1).append(input2);
+                });
+                var allPrice = $("#allPrice").attr("allPrice");
+                allPrice = parseInt(allPrice);
+                if ($("#isShoppingCarid").length>0) {
+                    var input3 = $("<input name='isShoppingCar'/>").val("购物车");
+                    $(form).append(input3);
+                }
+                var input3 = $("<input name='allPrice'/>").val(allPrice);
+                $(form).append(input3);
+                $(document.body).append(form);
+                $(form).submit();
+            }
+        });
+    </script>
+</body>
+</html>

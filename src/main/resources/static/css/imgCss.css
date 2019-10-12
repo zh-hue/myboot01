@@ -1,0 +1,17 @@
+.smallImg{
+    width: 15%;
+    height: 60px;
+    margin-top: 10px
+}
+.smallImg:hover{
+    border: 3px black solid;
+    cursor: pointer;
+}
+#addSpan:hover{
+    cursor: pointer;
+    border: 1px black solid;
+}
+#reduceSpan:hover{
+    cursor: pointer;
+    border: 1px black solid;
+}

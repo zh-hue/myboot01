@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+    <!--<mappers>-->
+        <!--&lt;!&ndash;用别名更加简洁方便&ndash;&gt;-->
+        <!--<package name="com.zhong.personweb.dao"></package>-->
+    <!--</mappers>-->
+</configuration>

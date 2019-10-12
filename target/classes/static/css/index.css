@@ -1,0 +1,85 @@
+#loginDiv{
+    width: 25%;
+    height: 95%;
+    background-color: snow;
+    border: 2px aqua solid;
+    top: 50%;
+    left: -25%;
+    position: relative;
+    animation-duration: 1s;/*动画持续1s*/
+    /*animation-delay: 100ms;延迟*/
+    animation-name: back;/*动画名字*/
+    /*animation-iteration-count指定动画执行次数 infinite持续执行动画*/
+    animation-iteration-count: 1;
+    animation-timing-function: linear;/*动画线性变化*/
+    animation-fill-mode: forwards;/*动画结束后保留结束状态*/
+}
+
+@keyframes back{
+    0%{
+        left: -25%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+    }
+    25%{
+        left: -2%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+    }
+    50%{
+        left: 16%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+    }
+    75%{
+        left: 34%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+    }
+    100%{
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+    }
+}
+
+#fontDiv{
+    background-image: url("/static/img/0.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 100%;
+    height: 89px;
+}
+
+.pointerClass:hover{
+    cursor: pointer;
+}
+
+#msgDiv{
+    text-align: center;
+}
+
+.centerDiv{
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.Ahover:hover{
+    border: 1px red solid;
+    cursor: pointer;
+}
+.AFhover:hover{
+    border: 1px red solid;
+    background-color: blue;
+    cursor: pointer;
+}
+.schedule{
+    width: 100%;
+    height: auto;
+    background-color: #a6e1ec;
+    border: 1px black solid;
+}
+div{
+    user-select: none;
+}

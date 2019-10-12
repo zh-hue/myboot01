@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/static/css/body.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/index.css}"/>
+    <script th:src="@{/webjars/jquery/3.4.1/jquery.js}"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap-3.3.7-dist/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-3.3.7-dist/css/bootstrap-theme.css}">
+    <script th:src="@{/css/bootstrap-3.3.7-dist/js/bootstrap.js}"></script>
+</head>
+<body>
+    <div id="loginDiv">
+        <div id="fontDiv"></div>
+        <form class="form-horizontal" th:action="@{/registerNow}" method="post">
+            <div id="msgDiv" style="color:red;" th:text="${msg}" th:if="${msg != null}"></div>
+            <div class="form-group" id="userDiv">
+                <label for="inputUser3" class="col-sm-3 control-label" th:text="#{userName}+':'"></label>
+                <div class="col-sm-8">
+                    <input name="username" type="text" class="form-control" id="inputUser3" th:placeholder="#{userName}">
+                    <span id="helpBlock1" class="help-block"></span>
+                </div>
+            </div>
+            <div class="form-group" id="pswDiv">
+                <label for="inputPassword3" class="col-sm-3 control-label" th:text="#{password}+':'"></label>
+                <div class="col-sm-8">
+                    <input name="password" type="password" class="form-control" id="inputPassword3" th:placeholder="#{password}">
+                    <span id="helpBlock2" class="help-block"></span>
+                </div>
+            </div>
+            <div class="form-group" id="emailDiv">
+                <label for="inputEmail3" class="col-sm-3 control-label" th:text="#{email}+':'"></label>
+                <div class="col-sm-8">
+                    <input name="email" type="email" class="form-control" id="inputEmail3" th:placeholder="#{email}">
+                    <span id="helpBlock3" class="help-block"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" th:text="#{gender}+':'"></label>
+                <div class="col-sm-8">
+                    <label class="radio-inline">
+                        <input class="pointerClass" type="radio" name="gender" id="inlineRadio1" value="男" th:checked="true"><label for="inlineRadio1" class="pointerClass" th:text="#{genderMan}"/>
+                    </label>
+                    <label class="radio-inline">
+                        <input class="pointerClass" type="radio" name="gender" id="inlineRadio2" value="女"><label for="inlineRadio2" class="pointerClass" th:text="#{genderWomen}"/>
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-5 col-sm-4">
+                    <button type="submit" class="btn btn-info" th:text="#{registerNow}"></button>
+                </div>
+            </div>
+        </form>
+        <a class="col-sm-offset-9 pointerClass" th:text="#{loginNow}" href="/index"></a>
+    </div>
+<script>
+    //前端校验,失去焦点时:
+    $("#inputUser3").blur(function () {
+        var pattern_username = /^[a-zA-Z\u4e00-\u9fa5]{2,8}$/g;
+        var userName = $("#inputUser3").val();
+        var matchResult = userName.match(pattern_username);
+        $("#userDiv").removeClass("has-error has-success");
+        $("#helpBlock1").text("");
+        if (matchResult){
+            //ajax请求
+            $.ajax({
+                url:"/isrepeat",
+                data: "username="+userName,
+                type:"POST",
+                success:function (result) {
+                    if (result){
+                        $("#userDiv").addClass("has-error");
+                        $("#helpBlock1").text("用户名已被使用!");
+                    }else {
+                        $("#userDiv").addClass("has-success");
+                        $("#helpBlock1").text("用户名可用!");
+                    }
+                }
+            });
+        }else {
+            $("#userDiv").addClass("has-error");
+            $("#helpBlock1").text("用户名不合法,由2-8个英文字母或汉字组成");
+        }
+    });
+    $("#inputPassword3").blur(function () {
+        var pattern_username = /(?!^[a-zA-Z]+$)(?!^[0-9]+$)^[0-9a-zA-Z]{6,10}$/g;
+        var matchResult = $("#inputPassword3").val().match(pattern_username);
+        $("#pswDiv").removeClass("has-error has-success");
+        $("#helpBlock2").text("");
+        if (matchResult){
+            $("#pswDiv").addClass("has-success");
+            $("#helpBlock2").text("密码可用!");
+        }else {
+            $("#pswDiv").addClass("has-error");
+            $("#helpBlock2").text("密码不合法!,必须包含数字,字母,长度为6-10");
+        }
+    });
+    $("#inputEmail3").blur(function () {
+        var pattern_username = /^[0-9a-zA-Z]+@[0-9a-zA-Z]+\.com$/g;
+        var email = $("#inputEmail3").val();
+        var matchResult = email.match(pattern_username);
+        $("#emailDiv").removeClass("has-error has-success");
+        $("#helpBlock3").text("");
+        if (matchResult){
+            //ajax请求
+            $.ajax({
+                url:"/enailIsUsed?",
+                data: "email="+email,
+                type:"POST",
+                success:function (result) {
+                    console.log(result);
+                    if (result){
+                        $("#emailDiv").addClass("has-error");
+                        $("#helpBlock3").text("该电子邮件已经用于注册了账号!");
+                    }else {
+                        $("#emailDiv").addClass("has-success");
+                        $("#helpBlock3").text("电子邮件可用!");
+                    }
+                }
+            });
+        }else {
+            $("#emailDiv").addClass("has-error");
+            $("#helpBlock3").text("电子邮件不合法");
+        }
+    });
+</script>
+</body>
+</html>

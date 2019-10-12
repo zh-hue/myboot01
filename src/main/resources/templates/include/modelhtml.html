@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div th:fragment="tophtml" style="background-color: bisque;height: 30px">
+        <div class="col-sm-1 col-sm-offset-2 topDivClass"><a href="/goToIndex">天猫首页</a></div>
+        <div class="col-sm-1 topDivClass"><a href="/" th:text="${username}+',你好!'"></a></div>
+        <div class="col-sm-1 topDivClass"><a th:text="${email}"></a></div>
+        <div class="col-sm-1 col-sm-offset-2 topDivClass"><a href="/OrderDetailHtml">我的订单</a></div>
+        <div class="col-sm-1 topDivClass"><a href="/goToShoppingCar">购物车</a></div>
+    </div>
+    <div th:fragment="topsouhtml" class="sousuo" style="position: relative">
+        <div class="imgClass"><img th:src="@{/img/logo.gif}" style="width: 100%;height: 100%"/></div>
+        <div class="souDiv toMidDiv">
+            <form action="/goodsByKeyword" method="post">
+                <input name="keywords" placeholder="衣服、家具..."/>
+            </form>
+            <button class="submitkeywordBtn">搜索</button>
+        </div>
+        <div style="clear: both"></div>
+    </div>
+    <div th:fragment="shangdian" style="width: 80%;margin: auto">
+        <img style="width: 100%;height: 100%;" th:src="@{/img/}+${var}"/>
+    </div>
+    <div th:fragment="paixu" style="width: 70%;height: auto;margin: 10px auto">
+        <div id="changeDiv1" style="background-color: red;cursor: pointer;display: inline;border: 2px black solid;padding: 5px" th:onclick="changePrice([[${type}]])">价格<span id="priceSpan" class="glyphicon glyphicon-arrow-up"></span></div>
+        <div id="changeDiv2" style="cursor: pointer;display: inline;border: 2px black solid;padding: 5px" th:onclick="changeDealnum([[${type}]])">销量<span id="dealSpan" class="glyphicon glyphicon-arrow-up"></span></div>
+    </div>
+
+    <div th:fragment="平板电脑" style="width: 80%;height: auto;margin-left: 10%">
+        <span style="margin: 10px;width: 250px;display:inline-block;">操作系统:  VIDAA </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">3D类型:  无 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">能效等级:  一级 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">产品名称:  Hisense/海信 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">网络连接方式:  全部支持 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">制造商名称:  青岛海信电器股份有限 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">型号:  LED60EC660 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">分辨率:  3840x2160 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">证书编号:  2016010808 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">申请人名称:  青岛海信电器股份有限 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">品牌: Hisense/海信 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">3C产品型号: LED60K5500 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">证书状态: 有效</span>
+    </div>
+    <div th:fragment="马桶" style="width: 80%;height: auto;margin-left: 10%">
+        <span style="margin: 10px;width: 250px;display:inline-block;">同城服务:  同城物流送货上门 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">坐便冲水量:  3/6L </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">颜色分类:  【箭牌头牌 收藏送原 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">承重:  70kg及以上 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">最小坑距:  305mm 400m </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">材质:  PP板 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">排水方式:  地排水 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">坐便器冲水方式:  喷射虹吸式 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">型号:  AB1116 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">盖板是否缓冲:  缓冲 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">坐便器类型:  连体式 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">冲水按键类型:  上按两端式 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">品牌:  ARROW/箭牌 </span>
+    </div>
+    <div th:fragment="空调" style="width: 80%;height: auto;margin-left: 10%">
+        <span style="margin: 10px;width: 250px;display:inline-block;">能效等级:  一级 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">产品名称:  MeiLing/美菱 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">制冷方式:  直冷 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">制造商名称:  合肥美菱股份有限公司 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">证书编号:  2012010701 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">申请人名称:  合肥美菱股份有限公司 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">3C产品型号:  BCD-213ZE3 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">美菱冰箱型号:  BCD-221UE3 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">箱门结构:  三门式 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">证书状态:  有效 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">冰箱冷柜机型:  冷藏冷冻冰箱 </span>
+    </div>
+    <div th:fragment="品牌女装" style="width: 80%;height: auto;margin-left: 10%">
+        <span style="margin: 10px;width: 250px;display:inline-block;">材质成分:  聚酯纤维100% </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">品牌:  Emyche/艾米秋 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">货号:  129668 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">尺码:  L M S XL X </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">上市年份季节:  2016年夏季 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">颜色分类:  白色 黑色 浅蓝 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">适用年龄:  18-25周岁 </span>
+    </div>
+    <div th:fragment="太阳镜" style="width: 80%;height: auto;margin-left: 10%">
+        <span style="margin: 10px;width: 250px;display:inline-block;">适合脸型:  圆脸 长脸 方脸 椭 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">是否可调:  镜面弧度 镜架松紧 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">颜色分类:  黑框黑灰片 枪框渐灰 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">货号:  8009 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">镜片材质:  其他 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">是否商场同款:  否 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">眼镜配件类型:  镜布 镜盒 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">价格区间:  100 - 200元 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">风格:  个性 舒适 运动 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">适用性别:  男 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">功能:  防UVA 防UVB  </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">型号:  8009 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">上市时间:  2014年春夏季 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">产地:  厦门 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">品牌:  PARZIN/帕森 </span>
+    </div>
+    <div th:fragment="男表" style="width: 80%;height: auto;margin-left: 10%">
+        <span style="margin: 10px;width: 250px;display:inline-block;">型号:  K-MZBK002 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">手表种类:  男 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">流行元素:  复古 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">表冠类型:  普通 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">表底类型:  透底 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">防水深度:  30米生活防水 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">形状:  圆形 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">品牌:  卡诗顿 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">保修:  店铺保修 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">表带材质:  真皮 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">上市时间:  2014年春夏季 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">成色:  全新 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">表盘直径:  40mm </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">品牌产地:  国内 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">表盘厚度:  11mm </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">表扣款式:  针扣 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">手表镜面材质:  镀膜玻璃 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">机芯类型:  自动机械表 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">表壳材质:  精钢 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">显示方式:  指针式 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">颜色分类:  黑面咖壳皮带款 黑面 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">风格:  时尚潮流 </span>
+    </div>
+    <div th:fragment="女表" style="width: 80%;height: auto;margin-left: 10%">
+        <span style="margin: 10px;width: 250px;display:inline-block;">型号:  蓝晶石系列-PD </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">手表种类:  女 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">流行元素:  大表盘 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">防水深度:  30米生活防水 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">形状:  圆形 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">品牌:  宾派 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">保修:  全国联保 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">表带材质:  真皮 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">上市时间:  2016年 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">表盘直径:  36mm </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">成色:  全新 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">品牌产地:  国内 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">表盘厚度:  8mm </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">机芯产地:  日本 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">手表镜面材质:  镀膜玻璃 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">机芯类型:  石英表 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">表壳材质:  合金 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">显示方式:  指针式 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">颜色分类:  深蓝色 白色 紫色  </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">风格:  时尚潮流 </span>
+    </div>
+    <div th:fragment="时尚男鞋" style="width: 80%;height: auto;margin-left: 10%">
+        <span style="margin: 10px;width: 250px;display:inline-block;">场合:  日常 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">鞋垫材质:  布 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">鞋头款式:  圆头 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">货号:  LS39537 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">跟底款式:  平跟 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">流行元素:  车缝线 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">闭合方式:  松紧带 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">尺码:  38 39 40 4 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">鞋制作工艺:  胶粘鞋 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">功能:  透气 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">销售渠道类型:  商场同款(线上线下都 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">适用对象:  青年（18-40周岁 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">品牌:  PLAYBOY/花花 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">鞋跟高:  低跟(1-3cm) </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">细分风格:  日常休闲 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">季节:  夏季 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">鞋面内里材质:  布 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">图案:  纯色 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">款式:  布鞋 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">上市年份季节:  2016年夏季 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">颜色分类:  蓝色 棕色 灰色 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">鞋底材质:  橡胶 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">低帮鞋品名:  布鞋 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">鞋面材质:  布 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">风格:  休闲 </span>
+    </div>
+    <div th:fragment="电热水器" style="width: 80%;height: auto;margin-left: 10%">
+        <span style="margin: 10px;width: 250px;display:inline-block;">能效等级:  一级 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">产品名称:  A．O．Smith/ </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">款式:  横式 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">制造商名称:  艾欧史密斯(中国)热 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">控制方式:  机械式 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">型号:  F160 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">证书编号:  2014010706 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">申请人名称:  艾欧史密斯(中国)热 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">3C产品型号:  CEWH-40P8  </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">证书状态:  有效 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">品牌:  A．O．Smith/ </span>
+    </div>
+    <div th:fragment="冰箱" style="width: 80%;height: auto;margin-left: 10%">
+        <span style="margin: 10px;width: 250px;display:inline-block;">能效等级:  一级 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">产品名称:  MeiLing/美菱 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">制冷方式:  直冷 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">制造商名称:  合肥美菱股份有限公司 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">证书编号:  2012010701 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">申请人名称:  合肥美菱股份有限公司 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">3C产品型号:  BCD-213ZE3 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">美菱冰箱型号:  BCD-221UE3 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">箱门结构:  三门式 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">证书状态:  有效 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">冰箱冷柜机型:  冷藏冷冻冰箱 </span>
+    </div>
+    <div th:fragment="男士西服" style="width: 80%;height: auto;margin-left: 10%">
+        <span style="margin: 10px;width: 250px;display:inline-block;">厚薄:  薄 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">材质成分:  聚酯纤维80% 粘胶 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">基础风格:  商务绅士 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">货号:  GM0020-A </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">品牌:  G·Mons/吉约蒙 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">上市年份季节:  2016年夏季 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">面料分类:  条绒布 </span>
+        <span style="margin: 10px;width: 250px;display:inline-block;">销售渠道类型:  纯电商(只在线上销售 </span>
+    </div>
+
+    <div th:fragment="buttom" style="clear:both;width: 100%;height: 100px;border-top: 1px black solid;border-bottom: 1px black solid;margin-top: 30px;margin-bottom: 30px">
+        <div class="toMidDiv" style="width: 80%;position: relative;">
+            <img src="/static/img/ensure.png"/>
+        </div>
+    </div>
+</body>
+</html>

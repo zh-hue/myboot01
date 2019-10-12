@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script th:src="@{/webjars/jquery/3.4.1/jquery.js}"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap-3.3.7-dist/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-3.3.7-dist/css/bootstrap-theme.css}">
+    <link rel="stylesheet" th:href="@{/css/top.css}"/>
+    <link rel="stylesheet" th:href="@{/css/imgCss.css}"/>
+    <link rel="stylesheet" th:href="@{/css/order.css}"/>
+    <script th:src="@{/css/bootstrap-3.3.7-dist/js/bootstrap.js}"></script>
+</head>
+<body>
+    <div th:replace="include/modelhtml :: tophtml"></div>
+    <div style="width: 70%;height: 100px;margin-left: 15%">
+        <div style="width: 30%;height: 100%;float: left">
+            <img class="toMidDiv" src="/static/img/simpleLogo.png" style="position: relative"/>
+        </div>
+    </div>
+    <div style="clear: both;"></div>
+    <div style="width: 70%;height: auto;margin-left: 15%;text-align: center;margin-top: 20px">
+        扫一扫付款(元)
+    </div>
+    <div style="width: 70%;height: auto;margin-left: 15%;text-align: center;margin-top: 20px" th:text="'￥'+${allPrice}"></div>
+    <div style="width: 70%;height: auto;margin-left: 15%;text-align: center;margin-top: 20px">
+        <img src="/static/img/alipay2wei.png">
+    </div>
+    <div style="width: 70%;height: auto;margin-left: 15%;text-align: center;margin-top: 20px">
+        <input id="allprice" th:value="${allPrice}" style="display: none;"/>
+        <div class="divClass" th:each="item:${orderLists}" style="display: none">
+            <input name="orderCode" th:value="${item}"/>
+        </div>
+        <div class="goodsIdClass" th:each="item:${goodsLists}" style="display: none">
+            <input name="goodsId" th:value="${item}"/>
+        </div>
+        <button onclick="start()" class="btn btn-info">确认支付</button>
+    </div>
+    <input id="isShoppingCarid" th:if="${isShoppingCar!=null}" style="display: none"/>
+    <div th:replace="include/modelhtml :: buttom" ></div>
+
+    <script>
+        var form = $("<form action='/playSuccessHtml' method='post' style='display: none'></form>");
+        var divs = $(".divClass");
+        $.each(divs,function (index,item) {
+            var orderCode = $(item).children("input:eq(0)").val();
+            var input = $("<input name='list["+index+"]'/>").val(orderCode);
+            $(form).append(input);
+        });
+        var goods = $(".goodsIdClass");
+        $.each(goods,function (index,item) {
+            var goodsId = $(item).children("input:eq(0)").val();
+            var input = $("<input name='goodsList["+index+"]'/>").val(goodsId);
+            $(form).append(input);
+        });
+        var allprice = $("#allprice").val();
+        var input1 = $("<input name='allPrice'/>").val(allprice);
+        $(form).append(input1);
+        if ($("#isShoppingCarid").length>0) {
+            var input3 = $("<input name='isShoppingCar'/>").val("购物车");
+            $(form).append(input3);
+        }
+        $(document.body).append(form);
+        function start() {
+            $("form").submit();
+        }
+    </script>
+</body>
+</html>
